@@ -1,0 +1,21 @@
+{
+  "indices": [
+    {
+      "name": "Bokeh Source Code",
+      "toolName": "bokeh_source",
+      "description": "Search through the Bokeh package source code",
+      "paths": [
+        "/Users/wesbarger/repos/bokeh/src/bokeh",
+        "/Users/wesbarger/repos/bokeh/examples/basic",
+        "/Users/wesbarger/repos/bokeh/examples/reference",
+        "/Users/wesbarger/repos/bokeh/examples/styling"
+      ],
+      "globPattern": "**/*.py"
+    }
+  ],
+  "dbStoragePath": "/Users/wesbarger/repos/mcp/rag/db",
+  "model": {
+    "embedding": "nomic-embed-text:latest",
+    "llm": "qwen3:latest"
+  }
+}
