@@ -1,0 +1,14 @@
+# mcp shit
+langchain
+unstructured
+libmagic
+langchain-community
+langchain-ollama
+chromadb
+mcp[cli]
+
+
+# python shit
+mypy
+black
+click

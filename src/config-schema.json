@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "MCP RAG Tool Configuration Schema",
+  "description": "Configuration schema for MCP tool that indexes codebases for RAG search",
+  "properties": {
+    "dbStoragePath": {
+      "type": "string",
+      "description": "Base directory path for persistent database storage",
+      "minLength": 1
+    },
+    "model": {
+      "type": "object",
+      "description": "Model configuration for embedding and LLM",
+      "properties": {
+        "embedding": {
+          "type": "string",
+          "description": "Embedding model to use for vector embeddings",
+          "minLength": 1
+        },
+        "llm": {
+          "type": "string",
+          "description": "Large language model to use for responses",
+          "minLength": 1
+        }
+      },
+      "required": ["embedding", "llm"],
+      "additionalProperties": false
+    },
+    "indices": {
+      "type": "array",
+      "description": "Collection of RAG search indices to configure",
+      "items": {
+        "type": "object",
+        "title": "RAG Search Index",
+        "description": "Configuration for a single RAG search index",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the search index",
+            "minLength": 1
+          },
+          "toolName": {
+            "type": "string",
+            "description": "Name of the MCP tool for this index",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of what this index contains and its purpose",
+            "minLength": 1
+          },
+          "paths": {
+            "type": "array",
+            "description": "Collection of directory or file paths to index",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          },
+          "globPattern": {
+            "type": "string",
+            "description": "Glob pattern for filtering files within the specified paths",
+            "minLength": 1,
+            "examples": ["**/*.py", "*.js", "src/**/*.{ts,tsx}", "**/*.md"]
+          }
+        },
+        "required": ["name", "toolName", "description", "paths", "globPattern"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": ["dbStoragePath", "model", "indices"],
+  "additionalProperties": false
+}

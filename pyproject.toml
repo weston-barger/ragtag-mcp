@@ -1,0 +1,43 @@
+[project]
+name = "ragtag"
+version = "0.1"
+description = "RAG indexing MCP server; built on Ollama + FastMCP"
+authors = [
+    { name = "Weston Barger", email = "weston.barger@gmail.com" }
+]
+license = { text = "Apache-2.0" }
+requires-python = ">=3.13"
+
+[tool.setuptools.packages.find]
+include = ["src"]
+exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+	]
+pythonpath = ""
+
+[tool.mypy]
+exclude = ["build", "tests", "examples"]
+python_version = "3.13"
+ignore_missing_imports = false
+follow_untyped_imports = true
+namespace_packages = true
+explicit_package_bases = true
+check_untyped_defs = true
+
+# [[tool.mypy.overrides]]
+# module = ["numpy.*", "pandas.*"]
+# ignore_missing_imports = true
+# follow_untyped_imports = true
+
+[tool.pylint]
+max-line-length = 88
+disable = [
+	# "C0114", # missing module docstring
+	"C0115", # missing class docstring
+	"C0116", # missing function docstring
+	"R0903", # too few public methods
+	"R0902", # too many public 
+]
