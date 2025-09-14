@@ -6,6 +6,7 @@ langchain-community
 langchain-ollama
 chromadb
 mcp[cli]
+unstructured[md]
 
 
 # python shit

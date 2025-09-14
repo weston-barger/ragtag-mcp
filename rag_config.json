@@ -1,30 +1,6 @@
 {
-  "indices": [
-    {
-      "name": "Bokeh Source Code",
-      "toolName": "bokeh_source",
-      "description": "Search through the Bokeh package source code",
-      "paths": [
-        "/Users/wesbarger/repos/bokeh/src/bokeh",
-        "/Users/wesbarger/repos/bokeh/examples/basic",
-        "/Users/wesbarger/repos/bokeh/examples/reference",
-        "/Users/wesbarger/repos/bokeh/examples/styling"
-      ],
-      "globPattern": "**/*.py"
-    },
-    {
-      "name": "Panel Source and Documentation",
-      "toolName": "panel_info",
-      "description": "Search through both Panel documentation and source code",
-      "paths": [
-        "/Users/wesbarger/repos/panel/doc",
-        "/Users/wesbarger/repos/panel/panel",
-        "/Users/wesbarger/repos/panel/examples"
-      ],
-      "globPattern": "**/*.py"
-    }
-  ],
-  "dbStoragePath": "/Users/wesbarger/repos/mcp/rag/db",
+  "indices": [],
+  "dbStoragePath": "/Users/suhdude/repos/mcp/rag/db",
   "model": {
     "embedding": "nomic-embed-text:latest",
     "llm": "qwen3:latest"

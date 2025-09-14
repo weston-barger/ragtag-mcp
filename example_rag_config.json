@@ -1,0 +1,31 @@
+{
+  "indices": [
+    {
+      "name": "Bokeh, Param, and Panel Package Source and Docs",
+      "toolName": "bokeh_param_panel_source",
+      "description": "Search through the Bokeh, Param and Panel packages for source code and docs",
+      "paths": [
+        "/Users/suhdude/repos/bokeh/src/bokeh",
+        "/Users/suhdude/repos/bokeh/examples/basic",
+        "/Users/suhdude/repos/bokeh/examples/reference",
+        "/Users/suhdude/repos/bokeh/examples/styling",
+        "/Users/suhdude/repos/panel/doc",
+        "/Users/suhdude/repos/panel/panel",
+        "/Users/suhdude/repos/panel/examples",
+        "/Users/suhdude/repos/param/param",
+        "/Users/suhdude/repos/param/tests",
+        "/Users/suhdude/repos/param/doc"
+      ],
+      "globPattern": [
+        "**/*.py",
+        "**/*.js",
+        "**/*.md"
+      ]
+    }
+  ],
+  "dbStoragePath": "/Users/suhdude/repos/ragtag-mcp/rag/db",
+  "model": {
+    "embedding": "nomic-embed-text:latest",
+    "llm": "qwen3:latest"
+  }
+}

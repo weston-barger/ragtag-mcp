@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-import warnings
-
-warnings.filterwarnings("ignore")
 import click
 
 from src.brew_install import install_ollama

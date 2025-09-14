@@ -6,6 +6,7 @@ from .config_parser import RagConfig
 def _brew_install(package: str) -> str:
     """Install a package using brew."""
     try:
+        print(f"\nInstalling {package}")
         result = subprocess.run(["brew", "install", package], text=True, check=True)
         return result.stdout
     except subprocess.CalledProcessError as e:
@@ -21,6 +22,7 @@ def _model_install(model: str) -> str:
 
 
 def install_ollama(config: RagConfig) -> None:
+    _brew_install("libmagic")
     _brew_install("ollama")
 
     for model in [config.model.embedding, config.model.llm]:

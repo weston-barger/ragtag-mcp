@@ -61,10 +61,14 @@
             "minItems": 1
           },
           "globPattern": {
-            "type": "string",
-            "description": "Glob pattern for filtering files within the specified paths",
-            "minLength": 1,
-            "examples": ["**/*.py", "*.js", "src/**/*.{ts,tsx}", "**/*.md"]
+            "type": "array",
+            "description": "Glob patterns for filtering files within the specified paths",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "examples": [["**/*.py"], ["**/*.py", "**/*.md"], ["src/**/*.{ts,tsx}"]]
           }
         },
         "required": ["name", "toolName", "description", "paths", "globPattern"],

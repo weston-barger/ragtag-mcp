@@ -28,7 +28,7 @@ class RagIndex:
     tool_name: str
     description: str
     paths: List[str]
-    glob_pattern: str
+    glob_pattern: List[str]
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "RagIndex":
@@ -123,5 +123,5 @@ if __name__ == "__main__":
         print(f"  - {index.name} ({index.tool_name})")
         print(f"    Description: {index.description}")
         print(f"    Paths: {', '.join(index.paths)}")
-        print(f"    Glob: {index.glob_pattern}")
+        print(f"    Glob: {', '.join(index.glob_pattern)}")
         print()

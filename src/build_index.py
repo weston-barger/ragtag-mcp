@@ -3,7 +3,11 @@ import shutil
 from pathlib import Path
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import DirectoryLoader, UnstructuredFileLoader
+from langchain_community.document_loaders import (
+    DirectoryLoader,
+    UnstructuredFileLoader,
+    UnstructuredMarkdownLoader,
+)
 from langchain_community.vectorstores import Chroma
 from tqdm import tqdm
 
@@ -69,15 +73,22 @@ def get_indices_to_process(
 def load_documents_from_paths(index: RagIndex) -> list:
     data = []
     for index_path in index.paths:
-        print(f"Indexing path: {index_path} ({index.glob_pattern}):")
-        loader = DirectoryLoader(
-            path=index_path,
-            glob=index.glob_pattern,
-            loader_cls=UnstructuredFileLoader,
-            show_progress=True,
-            recursive=True,
-        )
-        data.extend(loader.load())
+        print(f"Indexing path: {index_path}:")
+        for pattern in index.glob_pattern:
+            print(f"Globbing: {pattern}")
+            loader_cls = (
+                UnstructuredFileLoader
+                if not pattern.endswith("md")
+                else UnstructuredMarkdownLoader
+            )
+            loader = DirectoryLoader(
+                path=index_path,
+                glob=pattern,
+                loader_cls=loader_cls,
+                show_progress=True,
+                recursive=True,
+            )
+            data.extend(loader.load())
     return data
 
 
@@ -95,12 +106,12 @@ def create_vector_index(
         collection_name=index.tool_name,
         persist_directory=str(db_path),
     )
+    print(f'Finished building index for tool "{index.tool_name}".\n\n')
 
 
 def build_index(
     config: RagConfig, tools: list[str] | None = None, clean: bool = True
 ) -> None:
-    tools = ["panel_info"]  # @nocommit
     ollama_meta = get_ollama_meta(config)
     all_tools = {index.tool_name: index for index in config.indices}
 
