@@ -1,3 +1,4 @@
+import logging
 import subprocess
 from contextlib import asynccontextmanager
 from typing import Any
@@ -11,18 +12,41 @@ from .build_index import get_db, get_db_path
 from .config_parser import RagConfig
 from .llm import get_ollama_meta
 
+logger = logging.getLogger(__name__)
+
+
+def _kill_process(process: subprocess.Popen[bytes] | None) -> None:
+    if not process:
+        logger.info("No process to kill, returning early")
+        return
+
+    logger.info(f"Attempting to kill process {process.pid}")
+    process.kill()
+    logger.debug(f"Sent kill signal to process {process.pid}")
+    
+    try:
+        logger.debug(f"Waiting for process {process.pid} to terminate (timeout: 5s)")
+        process.wait(timeout=5)
+        logger.info(f"Process {process.pid} terminated successfully")
+    except subprocess.TimeoutExpired:
+        logger.warning(f"Process {process.pid} did not terminate within timeout, force killing")
+        process.kill()
+        process.wait()
+        logger.info(f"Process {process.pid} force killed and terminated")
+
 
 @asynccontextmanager
-def lifespan(mcp):
-    process = subprocess.Popen(
-        ["ollama", "serve"],
-        shell=True,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    yield
-    process.terminate()
-    process.wait()
+async def lifespan(mcp):
+    process = None
+    try:
+        process = subprocess.Popen(
+            ["ollama", "serve"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        yield
+    finally:
+        _kill_process(process)
 
 
 def get_mcp(config: RagConfig) -> FastMCP[Any]:

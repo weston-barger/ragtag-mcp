@@ -5,6 +5,7 @@ import warnings
 warnings.filterwarnings("ignore")
 import click
 
+from src.brew_install import install_ollama
 from src.build_index import build_index
 from src.config_parser import ConfigParser, RagConfig
 from src.serve_index import get_mcp
@@ -14,6 +15,12 @@ from src.serve_index import get_mcp
 def main():
     """Main CLI tool"""
     pass
+
+
+@main.command()
+def osx_install():
+    """install ollama on osx"""
+    install_ollama(get_config())
 
 
 @main.command()
