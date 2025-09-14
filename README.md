@@ -51,6 +51,8 @@ The `main.py` has a command that will help you do this on OSX. Run
 python main.py osx_install
 ```
 
+NOTE: you'll want to re-run the osx_install command if you change the embedding or llm models in the config. 
+
 ### Create your RAG search indices
 Now fill our the `indices` section of your `rag_config.json` file. There is an example in `example_rag_config.json`. Then run 
 
