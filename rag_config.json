@@ -11,6 +11,17 @@
         "/Users/wesbarger/repos/bokeh/examples/styling"
       ],
       "globPattern": "**/*.py"
+    },
+    {
+      "name": "Panel Source and Documentation",
+      "toolName": "panel_info",
+      "description": "Search through both Panel documentation and source code",
+      "paths": [
+        "/Users/wesbarger/repos/panel/doc",
+        "/Users/wesbarger/repos/panel/panel",
+        "/Users/wesbarger/repos/panel/examples"
+      ],
+      "globPattern": "**/*.py"
     }
   ],
   "dbStoragePath": "/Users/wesbarger/repos/mcp/rag/db",

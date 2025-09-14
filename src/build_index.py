@@ -69,7 +69,7 @@ def get_indices_to_process(
 def load_documents_from_paths(index: RagIndex) -> list:
     data = []
     for index_path in index.paths:
-        print(f"Indexing path: {index_path}:")
+        print(f"Indexing path: {index_path} ({index.glob_pattern}):")
         loader = DirectoryLoader(
             path=index_path,
             glob=index.glob_pattern,
@@ -84,7 +84,7 @@ def load_documents_from_paths(index: RagIndex) -> list:
 def create_vector_index(
     documents: list, config: RagConfig, index: RagIndex, ollama_meta: OllamaMeta
 ) -> None:
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=100)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=50)
     texts = text_splitter.split_documents(documents)
     db_path = get_db_path(config, index)
 
@@ -100,6 +100,7 @@ def create_vector_index(
 def build_index(
     config: RagConfig, tools: list[str] | None = None, clean: bool = True
 ) -> None:
+    tools = ["panel_info"]  # @nocommit
     ollama_meta = get_ollama_meta(config)
     all_tools = {index.tool_name: index for index in config.indices}
 
