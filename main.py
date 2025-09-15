@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from pathlib import Path
+
 import click
 
 from src.brew_install import install_ollama
@@ -48,8 +50,9 @@ def serve():
 
 
 def get_config() -> RagConfig:
-    parser = ConfigParser("src/config-schema.json")
-    return parser.parse_config_file("rag_config.json")
+    parser = ConfigParser()
+    config_path = Path(__file__).parent / Path("rag_config.json")
+    return parser.parse_config_file(str(config_path))
 
 
 if __name__ == "__main__":

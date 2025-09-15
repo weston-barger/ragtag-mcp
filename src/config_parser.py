@@ -7,6 +7,10 @@ import jsonschema
 from jsonschema import validate
 
 
+def _get_schema_path() -> Path:
+    return Path(__file__).parent / Path("config-schema.json")
+
+
 @dataclass
 class ModelConfig:
     """Represents model configuration for embedding and LLM."""
@@ -61,11 +65,11 @@ class RagConfig:
 class ConfigParser:
     """Parser for RAG configuration files."""
 
-    def __init__(self, schema_path: str | None = None):
+    def __init__(self):
         """Initialize parser with optional schema path for validation."""
         self.schema = None
-        if schema_path:
-            self.load_schema(schema_path)
+        self.schema_path = str(_get_schema_path())
+        self.load_schema(self.schema_path)
 
     def load_schema(self, schema_path: str) -> None:
         """Load JSON schema for validation."""
@@ -98,30 +102,3 @@ class ConfigParser:
             self.validate_config(config_data)
 
         return RagConfig.from_dict(config_data)
-
-
-def load_config(config_path: str, schema_path: str | None = None) -> RagConfig:
-    """Convenience function to load and parse configuration."""
-    parser = ConfigParser(schema_path)
-    return parser.parse_config_file(
-        config_path, validate_schema=schema_path is not None
-    )
-
-
-# Example usage
-if __name__ == "__main__":
-    # Load configuration with schema validation
-    parser = ConfigParser("src/config-schema.json")
-    config = parser.parse_config_file("rag_config.json")
-
-    print(f"Database storage path: {config.db_storage_path}")
-    print(f"Model configuration:")
-    print(f"  Embedding: {config.model.embedding}")
-    print(f"  LLM: {config.model.llm}")
-    print(f"Loaded {len(config.indices)} RAG indices:")
-    for index in config.indices:
-        print(f"  - {index.name} ({index.tool_name})")
-        print(f"    Description: {index.description}")
-        print(f"    Paths: {', '.join(index.paths)}")
-        print(f"    Glob: {', '.join(index.glob_pattern)}")
-        print()
